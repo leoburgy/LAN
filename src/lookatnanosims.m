@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is the startup script of the Look@NanoSIMS program. To run the
-% program, simply type lookatnanosims in Matlab command window and 
+% This is the startup script of the Look@NanoSIMS (LANS) program. To run
+% the program, simply type lookatnanosims in Matlab command window and 
 % press Enter.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Look@NanoSIMS was written by Lubos Polerecky @ MPI-Bremen 2008-2012.
@@ -15,25 +15,34 @@
 % saved in the figs folder. By setting the units of the GUI objects to
 % 'characters', the GUIs shoud look similar (and good) for all platforms
 % (e.g. linux, windows, mac). Since Matlab version 2014, however, this
-% may not be the case any longer. If you are not happy with the look of the
-% GUI on your system, use Matlab's GUI editor to modify it (Matlab:
-% File->New->GUI->Open existing GUI->Browse). If you don't want to do this,
-% it is recommended that you use Matlab 2013b, which is the version where
-% the GUI's were developed.
+% may no longer be the case. 
+%
+% The LANS versions before and including 2017-11-04 were developed in
+% Matlab 2013b, the versions after this date in Matlab 2017b. Thus, if you
+% open the older LANS version with a newer Matlab version, or vice versa,
+% the appearance of LANS may not look as good as you would like to. If this
+% is the case, I recommend that you upgrade Matlab. If you cannot do this,
+% than you can still modify the GUI by yourself. To do this, in Matlab
+% console, type 'guide' (without the '') and press enter. Then browse to
+% the fig file that you would like to modify and change the positions and
+% sizes of the GUI objects to your liking. Alternatively, do this through
+% the menu: File->New->GUI->Open existing GUI->Browse.
 %
 % The exported images (eps and pdf files) depend on the platform, and it
 % seems that also on the Matlab version used. If you are not happy with the
 % look of the exported images or plots (e.g. the fonts are too big or too
 % small), select Settings -> Additional output options in the main menu of
-% the program to modify the appearance of the exported figures.
+% LANS to modify the appearance of the exported figures.
 %
-% To enable all features implemented in Look@NanoSIMS, you will also need to
-% have the following programs/packages installed on your system:
-% - stadard LaTeX distribution, including binaries for epstopdf and pdflatex, 
+% To enable all features implemented in LANS, you will also need to have
+% the following programs/packages installed on your system: 
+% - LaTeX distribution, including binaries for epstopdf and pdflatex, 
 % and also the URL (url.sty) and HYPERREF (hyperref.sty) packages.
 % - the Ghostscript program (for converting EPS files to PDF).
 % - the program for unzipping zip files (e.g. 7-zip under Windows, or unzip 
 % under Linux or Mac-OS).
+% - the program for viewing PDF files (e.g., xreader under Linux, or
+% Preview under Mac-OS).
 %
 % When working on Ubuntu-like Linux systems, you will need to install these
 % packages to make things work seemlessly: 
@@ -45,23 +54,25 @@
 % If you use Mac-OS, first check your system to find out where the 
 % pdflatex and ghostscript binaries are located (e.g., /usr/texbin/ and 
 % /usr/local/bin). Then modify accordingly the LATEXDIR and GSDIR variables 
-% in the paths.m file. The unzip program is installed by default.
+% in the paths.m file. The unzip program is installed by default. The
+% preview program probably too.
 %
-% If you use Windows, standard installation of MikTeX, Ghostscript and 7-Zip
-% will do the job to make everything work correctly in Look@NanoSIMS.
+% If you use Windows, standard installation of MikTeX, Ghostscript and
+% 7-Zip will do the job to make everything work correctly in LANS.
 %
 % To make sure that all the paths are correctly defined, check the file 
 % paths.m in the LANS folder. 
 %
 % It seems that secondary ion counts on some (newer?) systems are stored as 
-% ushort (16-bit unsigned integer), whereas on some (older?) systems they are 
-% stored as uint8 (8-bit unsigned integers). Perhaps this is because of the
-% differences between the 32-bit and 64-bit operating systems that run the
-% Cameca instrument, but I am not 100% sure. Therefore, if you experience
-% problems with loading a file, e.g. the program tells you that there are
-% 0 planes, it may well be that this is the cause. In that case, open the
-% file read_im_file.m in the fnc folder and see whether you can hack it to 
-% make things work. If not, contact LP who may be able to help you.
+% ushort (16-bit unsigned integer), whereas on some (older?) systems they
+% are  stored as uint8 (8-bit unsigned integers). Perhaps this is because
+% of the differences between the 32-bit and 64-bit operating systems that
+% run the Cameca instrument, but I am not 100% sure. Therefore, if you
+% experience problems with loading an im file, e.g. the program tells you
+% that there are 0 planes even though there are for sure more, it may well
+% be that this is the cause. In that case, open the file read_im_file.m in
+% the fnc folder and see whether you can hack it to make things work. If
+% not, contact LP who may be able to help you. 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Here you can modify some of the default settings of the program.
@@ -106,7 +117,7 @@ LANS_version = '2017-05-14';
 LANS_version = '2017-06-01';
 LANS_version = '2017-09-07';
 LANS_version = '2017-11-04';
-LANS_version = '2017-12-15-matlab2017b';
+LANS_version = '2017-12-18-matlab2017b';
 
 % name of the external image file (empty by default)
 EXTERNAL_IMAGEFILE = '';
@@ -114,10 +125,10 @@ EXTERNAL_IMAGEFILE = '';
 % extension of the Matlab output 
 MAT_EXT = '.mat';
 
-% Load paths to make sure all the functions can be found by Matlab.
+% Load paths to make sure all the LANS functions can be found by Matlab.
 paths;
 
-% Welcoming message from Lubos
+% Welcoming message from LP
 fprintf(1,'================================================================\n')
 fprintf(1,'Look@NanoSIMS (version %s)\n',LANS_version);
 fprintf(1,'Written by Lubos Polerecky <lpolerec (at) mpi-bremen.de>\n')

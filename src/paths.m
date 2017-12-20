@@ -1,17 +1,20 @@
-% paths necessary for running of the Look@NanoSIMS program
+% paths necessary for running Look@NanoSIMS
 
-% path with the basic LANS functions
+% path to the core LANS functions
 addpath([pwd,filesep,'fnc']);
-% path with functions required for postprocessing (processing metafiles)
+% path to add-on functions required for post-processing (processing metafiles)
 addpath([pwd,filesep,'postprocess']);
-% path functions written by other people that are used by LANS
+% path to functions used by LANS but written by other people
 addpath([pwd,filesep,'external']);
-% path with fig files that define the graphical user interface (GUI)
-addpath([pwd,filesep,'figs']);
 
 % system-specific settings; modify with care!
 if ismac
-    % MAC-OS users may have a bit of trouble to get things working
+    
+    % MAC-OS users may have a bit of trouble to get things working and look
+    % good
+    
+    % path to fig files that define the graphical user interface (GUI)
+    addpath([pwd,filesep,'figs_mac']);
 
     fprintf(1,'Starting Look@NanoSIMS on a Mac-OS platform.\n');
     
@@ -38,7 +41,12 @@ if ismac
     PDF_VIEWER = '';
 
 elseif isunix
+    
     % unix/linux users have it easy
+    
+    % path to fig files that define the graphical user interface (GUI)
+    addpath([pwd,filesep,'figs']);
+
 
     fprintf(1,'Starting Look@NanoSIMS on a Unix/Linux platform.\n');
     
@@ -50,7 +58,11 @@ elseif isunix
     PDF_VIEWER = 'xreader';
         
 elseif ispc
+    
     % Windows users also have it relatively easy
+    
+    % path to fig files that define the graphical user interface (GUI)
+    addpath([pwd,filesep,'figs']);
 
     fprintf(1,'Starting Look@NanoSIMS on a MS-Windows platform.\n');
     
