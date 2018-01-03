@@ -49,12 +49,16 @@ if(~isempty(foutname))
     % generate the PDF-LaTeX file for each variable
     
     fntex = [];
+    logscale = struct2cell(s.logscale);
     for m=1:6
         if(length(all{1})>=m)
             if(~isempty(all{1}{m}))
                 if(~strcmp(lower(all{1}{m}),'x') & ~strcmp(lower(all{1}{m}),'y') & ~strcmp(lower(all{1}{m}),'l2d'))
                     ms = all{1}{m};
                     ms=convert_string_for_texoutput(ms);
+                    if logscale{m}==1
+                        ms = ['log(',ms,')'];
+                    end;
                     fntex{m} = [foutname delimiter ms '.tex'];
                 end;
             end;
@@ -164,6 +168,9 @@ if(~isempty(foutname))
                         plotImageCells(10,v.IM,c.Maskimg,[base_dir,fname{j}],title_,[s.outline_color,'-'],scale,...
                             [s.include_outline s.zero_outside 0 lscale 0 1 0 0 0 0 1 0 0 0 1],s.bw,0,...
                             xyscale,fname{j},s.cellfile,0,0);
+                        if lscale==1
+                            ms = ['log(',ms,')'];
+                        end;
                         exportImageCells(10,[base_dir,fname{j}],ms,'eps',...
                             additional_settings.print_factors(1));                                               
                 

@@ -55,10 +55,10 @@ if(~isempty(foutname))
             ms = all{1}{m};
             R{m} = [];
             Ra{m} = [];
+            title_ = ms;
             
             % load accumulated ion counts from the mat file
-            if ~strcmp(lower(ms),'size')
-                title_ = ms;
+            if ~strcmp(lower(ms),'size')                
                 ms=convert_string_for_texoutput(ms);
                 mtmp=[base_dir,fname{j},delimiter,'mat',delimiter,ms,'.mat'];
                 if exist(mtmp)
@@ -74,9 +74,9 @@ if(~isempty(foutname))
                   
             % find the scale
             switch m,
-                case 1, scale=s.xscale1; lscale=s.logscale.x1; xl = ms;
-                case 2, scale=s.yscale1; lscale=s.logscale.y1; yl = ms;
-                case 3, scale=s.xscale2; lscale=s.logscale.x2; zl = ms;
+                case 1, scale=s.xscale1; lscale=s.logscale.x1; xl = title_;
+                case 2, scale=s.yscale1; lscale=s.logscale.y1; yl = title_;
+                case 3, scale=s.xscale2; lscale=s.logscale.x2; zl = title_;
             end;
 
             if isempty(strfind(scale,'auto'))
@@ -268,7 +268,15 @@ for ii=1:nfy
     for jj=1:nfx
         k=k+1;
         if k<=length(rgb_big)
-            rgb1 = [rgb1 rgb_big{k}];
+            if jj==1
+                rgb1 = [rgb1 rgb_big{k}];
+            else                
+                if size(rgb_big{k},1) == size(rgb1,1)
+                    rgb1 = [rgb1 rgb_big{k}];
+                else
+                    fprintf(1,'WARNING: data #%d skipped due to size mismatch.\n',k);
+                end;
+            end;
         end;
     end;
     if ii==1

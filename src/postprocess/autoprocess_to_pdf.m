@@ -98,13 +98,13 @@ if ~isempty(foutname)
             for j=1:length(p.mass)
                 switch j
                     case 1, ims = str2num(a.h.edit12.string);
-                    case 2, ims = str2num(a.h.edit13.string);
-                    case 3, ims = str2num(a.h.edit14.string);
-                    case 4, ims = str2num(a.h.edit15.string);
-                    case 5, ims = str2num(a.h.edit16.string);
-                    case 6, ims = str2num(a.h.edit17.string);
-                    case 7, ims = str2num(a.h.edit18.string);
-                    case 8, ims = str2num(a.h.edit75.string);
+                    case 2, ims = str2num(a.h.edit12.string);
+                    case 3, ims = str2num(a.h.edit12.string);
+                    case 4, ims = str2num(a.h.edit12.string);
+                    case 5, ims = str2num(a.h.edit12.string);
+                    case 6, ims = str2num(a.h.edit12.string);
+                    case 7, ims = str2num(a.h.edit12.string);
+                    case 8, ims = str2num(a.h.edit12.string);
                 end;
                 images{j}=ims;
             end;
@@ -193,14 +193,6 @@ if ~isempty(foutname)
             im=p.accu_im{m};
             % find autoscale
             as = find_image_scale(im,s.log_scale,0);
-            %as=[min(im(:)) round(quantile(im(:),0.999))];
-            %as = quantile(im(:), additional_settings.autoscale_quantiles);
-            %fprintf(1,'Auto-scale based on quantiles [%.3f %.3f]\n',additional_settings.autoscale_quantiles);
-            % if the images should be log10-transformed, then make sure the
-            % min-scale is not zero
-            %if s.log_scale
-            %    if as(1)==0, as(1)=1; end;
-            %end;
             % display image, including the cell outline if ROIs exist.
             % additionally, the data will also be exported as *.mat.
             plotImageCells(1,im,p.Maskimg,bdir,p.mass{m},...
@@ -279,28 +271,22 @@ if ~isempty(foutname)
                     end;                    
                     logscale=0;
                 end;
-            else
-                if 0 & logscale 
-                    if xyscale(1) == 0
-                        xyscale(1) = 1e-3 * xyscale(2);
-                        fprintf(1,'Log-transform requested: auto-scaling minimum changed from 0 to %.3e\n',xyscale(1));
-                    end;
-                    xyscale = log10(xyscale);
-                end;
-            end;
-            
-            if logscale
-                tit = ['log(' tit ')'];                
-            end;
+            end;                        
             
             % display the ratio image, including the cell outline if ROIs
             % exist. additionally, the data will also be exported as
-            % *.mat.
+            % *.mat. Note, if logscale==1, the actual data is saved, not
+            % log-transformed!
             if ~isempty(R{m})
                 plotImageCells(1,R{m},p.Maskimg,bdir,tit,...
                         [s.outline_color '-'],xyscale,...
                         [s.include_outline 0 0 logscale 0 1 0 0 0 0 1 0 0 0 1 0 0],...
                         s.bw,1,p.scale,fname{k},'',p.images,p.planes);            
+                % if logscale==1, the exported eps/pdf file will contain
+                % log()
+                if logscale
+                    tit = ['log(' tit ')'];                
+                end;
                 % export ratio image as EPS (and PDF)    
                 exportImageCells(1,bdir,tit,'eps',...
                             additional_settings.print_factors(1));

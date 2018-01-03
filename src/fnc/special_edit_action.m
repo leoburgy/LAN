@@ -8,7 +8,16 @@ global additional_settings;
 [opt1,opt3,opt4]=load_options(h,0);
 
 scale = str2num(get(hObject,'string'));
-tit1 = my_get(h.edit63,'string');
+% find out the title of the graph
+if(isempty(my_get(h.edit63,'string')))
+    tit1=fixdir(p.fdir);
+else
+    tit1 = my_get(h.edit63,'string');
+end;
+if tit1(end)==filesep
+    tit1=tit1(1:(end-1));
+end;
+
 if f<=length(p.special)
     
     tit2 = p.special{f};

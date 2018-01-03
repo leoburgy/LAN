@@ -21,6 +21,9 @@ if(isempty(my_get(handles.edit63,'string')))
 else
     tit = my_get(handles.edit63,'string');
 end;
+if tit(end)==filesep
+    tit=tit(1:(end-1));
+end;
 
 if opt1(3) | opt1(6) | opt1(10) | opt1(5) | opt1(13) | opt1(14)
    

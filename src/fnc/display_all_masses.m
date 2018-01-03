@@ -1,7 +1,7 @@
 function display_all_masses(handles)
 % function for displaying all masses as raw images
 p=handles.p;
-fontsize = 8;
+fontsize = 10;
 font_gap = 1;
 global additional_settings;
 
@@ -41,7 +41,7 @@ else
     end;
     
     w=size(p.accu_im{1},2);    
-    h=size(p.accu_im{1},1);    
+    h=size(p.accu_im{1},1);   
     im=zeros(jmax*h,noc*w);
     
     
@@ -57,61 +57,79 @@ else
                 ind=find(ims<0);
                 if ~isempty(ind), ims(ind)=zeros(size(ind)); end;
                 ind=find(ims>size(def_cmat,1));
-                if ~isempty(ind), ims(ind)=size(def_cmat,1)*ones(size(ind)); end;            
+                if ~isempty(ind), ims(ind)=size(def_cmat,1)*ones(size(ind)); end;    
                 im((jj-1)*h+[1:h],(ii-1)*w+[1:w])=ims;
             end;
         end;
     end;
     % add white areas for annotations
-    fac = round(h/128);
-    im2 = zeros(size(im,1)+jmax*(fontsize+2*font_gap)*fac,size(im,2));
-    im2([1:h]+(fontsize+2*font_gap)*fac,:) = im([1:h],:);
+    %fac = round(h/128);
+    fac = (h/128);
+    im2 = zeros(size(im,1)+round((jmax+1)*(fontsize+2*font_gap)*fac),size(im,2));
+    im2([1:h]+round((fontsize+2*font_gap)*fac),:) = im([1:h],:);
     if jmax>1
-        im2([1:h]+h+2*(fontsize+2*font_gap)*fac,:) = im([1:h]+h,:);
+        im2([1:h]+h+round(2*(fontsize+2*font_gap)*fac),:) = im([1:h]+h,:);
     end;
     im = im2;
     % convert from indexed image to rgb, so that we can recolor the
     % annotation areas to white
     im2=ind2rgb(round(im),def_cmat);
     % recolor the annotation areas to white
-    im2([1:(fontsize+2*font_gap)*fac],:,1)=1;
-    im2([1:(fontsize+2*font_gap)*fac],:,2)=1;
-    im2([1:(fontsize+2*font_gap)*fac],:,3)=1;
-    if jmax>1
-        im2([1:(fontsize+2*font_gap)*fac]+h+(fontsize+2*font_gap)*fac,:,1)=1;
-        im2([1:(fontsize+2*font_gap)*fac]+h+(fontsize+2*font_gap)*fac,:,2)=1;
-        im2([1:(fontsize+2*font_gap)*fac]+h+(fontsize+2*font_gap)*fac,:,3)=1;
+    for jj=1:(jmax+1)
+        ind = [1:round((fontsize+2*font_gap)*fac)] + round((jj-1)*(h+(fontsize+2*font_gap)*fac));
+        im2(ind,:,1)=1;
+        im2(ind,:,2)=1;
+        im2(ind,:,3)=1;
     end;
     im=im2;
     % display the assembled image
     imagesc(im);
     %colormap(def_cmat);
     %colormap(get_colormap(additional_settings.colormap));
-    set(gca,'xtick',[],'ytick',[],'box','off');
+    set(gca,'xtick',[],'ytick',[],'box','off',...
+        'xcolor',0.999*[1 1 1],'ycolor',0.999*[1 1 1]);
     % add mass names and scale
     k=0;
     for jj=1:jmax
         for ii=1:noc
             k=k+1;
             if k<=nim
-                if k==1
-                    ss=round(10*p.scale)/10;
-                    if (round(ss)~=ss)
-                        ff='%.1fum';
-                    else
-                        ff='%dum';
-                    end;
-                    s=sprintf([' (', ff, '/%dx%d/%d)'],ss,p.width,p.height,length(p.planes));
-                else
-                    s=[];
-                end;
-                t=text((ii-1)*w+w/2,(jj-1)*(h+fac*(fontsize+2*font_gap))+(fontsize/2+font_gap)*fac,sprintf('%s [%d %d]%s',p.mass{k},round(p.imscale{k}),s),...
-                    'HorizontalAlignment','center','VerticalAlignment','middle','Fontsize',fontsize,...
-                    'FontName','Helvetica');
-                %'BackgroundColor',[1 1 1],...
+                t=text((ii-1)*w+w/2,...
+                    round((jj-1)*(h+fac*(fontsize+2*font_gap))+(fontsize/2+font_gap)*fac+0),...
+                    sprintf('%s [%d %d]',p.mass{k},round(p.imscale{k})),...
+                    'HorizontalAlignment','center','VerticalAlignment','middle',...
+                    'Fontsize',fontsize,'FontName','Helvetica');
             end;
         end;
     end;
+    % add image size and number of planes
+    ss=round(10*p.scale)/10;
+    ss2 = round(10*p.scale*p.height/p.width)/10;
+    if (round(ss)~=ss)
+        ff='%.1f';
+    else
+        ff='%d';
+    end;
+    if (round(ss2)~=ss2)
+        ff2='%.1f';
+    else
+        ff2='%d';
+    end;
+    
+    if isfield(p,'xyalign')
+        pl = size(p.xyalign,1);
+    elseif isempty(p.images{1})
+        pl = length(p.planes);
+    else
+        pl = length(p.images{1});
+    end;
+    s=sprintf([ff , 'x', ff2, 'um %dx%dpix %d planes (%s@%s; %d ms)'],...
+        ss,ss2,p.width,p.height,pl,p.date,p.time,p.dwell_time);
+    t=text(noc/2*w,...
+           round(jmax*(h+fac*(fontsize+2*font_gap))+(fontsize/2+font_gap)*fac+0),...
+           s,...
+           'HorizontalAlignment','center','VerticalAlignment','middle',...
+           'Fontsize',fontsize,'FontName','Helvetica');
     
     % export figure as PNG
     fout=[p.filename '.png'];

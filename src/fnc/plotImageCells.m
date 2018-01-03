@@ -250,7 +250,7 @@ if o1(6)
                 else
                     set(gca,'Position',[0.1+0.5*0.8*(1-1/sfac) 0.11 0.8/sfac 0.8]);
                     b=colorbar('location','SouthOutside');                                          
-                    set(b,'Position',[0.14+0.5*0.62*(1-1/sfac) 0.08 0.62/sfac 0.02]);
+                    set(b,'Position',[0.14+0.5*0.8*(1-1/sfac) 0.08 0.68/sfac 0.02]);
                 end;  
 
             elseif additional_settings.color_bar_pos==1

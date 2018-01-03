@@ -1,11 +1,11 @@
 % paths necessary for running Look@NanoSIMS
 
 % path to the core LANS functions
-addpath([pwd,filesep,'fnc']);
+addpath([pwd,filesep,'fnc'],'-end');
 % path to add-on functions required for post-processing (processing metafiles)
-addpath([pwd,filesep,'postprocess']);
+addpath([pwd,filesep,'postprocess'],'-end');
 % path to functions used by LANS but written by other people
-addpath([pwd,filesep,'external']);
+addpath([pwd,filesep,'external'],'-end');
 
 % system-specific settings; modify with care!
 if ismac
@@ -14,7 +14,7 @@ if ismac
     % good
     
     % path to fig files that define the graphical user interface (GUI)
-    addpath([pwd,filesep,'figs_mac']);
+    addpath([pwd,filesep,'figs_mac'],'-end');
 
     fprintf(1,'Starting Look@NanoSIMS on a Mac-OS platform.\n');
     
@@ -45,7 +45,7 @@ elseif isunix
     % unix/linux users have it easy
     
     % path to fig files that define the graphical user interface (GUI)
-    addpath([pwd,filesep,'figs']);
+    addpath([pwd,filesep,'figs'],'-end');
 
 
     fprintf(1,'Starting Look@NanoSIMS on a Unix/Linux platform.\n');
@@ -62,7 +62,7 @@ elseif ispc
     % Windows users also have it relatively easy
     
     % path to fig files that define the graphical user interface (GUI)
-    addpath([pwd,filesep,'figs']);
+    addpath([pwd,filesep,'figs'],'-end');
 
     fprintf(1,'Starting Look@NanoSIMS on a MS-Windows platform.\n');
     
@@ -71,9 +71,9 @@ elseif ispc
     % Note that the full path to the program needs to be specified here,
     % because, based on limited experience, the path to the program is not,
     % or may not be, known within the Matlab environment.
-    UNZIP_COMMAND = '"c:\Program Files (x86)\7-Zip\7z.exe" e';
+    UNZIP_COMMAND = '"c:\Program Files\7-Zip\7z.exe" e';
 
     % PDF viewer
-    PDF_VIEWER = [];
+    PDF_VIEWER = '"c:\Program Files\SumatraPDF\SumatraPDF.exe"';
     
 end;

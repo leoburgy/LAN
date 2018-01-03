@@ -16,3 +16,8 @@ new LANS additions
 - mass images can be smoothed before the ratios are calculated (this affects the display of images, their histograms or pixel-by-pixel scatter plots, but NOT scatter plots of ratios calculated from values accumulated in ROIs)
 - when im is loaded in blocks, the output folder will have a suffix _bN, here N=block size
 - improved placing of the axes where the ratio and RGB images are displayed. they look now the same
+
+2018-01-02
+
+- improvements in placement of titles and labels in displayed images
+
