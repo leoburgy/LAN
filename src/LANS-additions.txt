@@ -21,3 +21,6 @@ new LANS additions
 
 - improvements in placement of titles and labels in displayed images
 
+2018-01-13
+
+- improvements in statistics_gui.m, calculate_R_images.m, add_remove_cells_tool.m
