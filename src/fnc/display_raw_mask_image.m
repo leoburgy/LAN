@@ -216,7 +216,7 @@ if isfield(handles,'p')
             for ii=1:size(rgb_true,3)
                 rt = squeeze(rgb_true(:,:,ii));
                 %rtw = wiener2(rt,p.mask_kernel(1)*[1 1]);
-                rtw = gaussfilt_external(rt,p.mask_kernel);
+                rtw = gaussfilt_external(rt,p.mask_kernel(1),p.mask_kernel(2));
                 ind = find(isnan(rtw) & ~isnan(rt));
                 rtw(ind) = rt(ind);
                 rgb_true(:,:,ii) = rtw;

@@ -72,6 +72,10 @@ else
 end;
 Np=length(all_images{1});
 
+if length(mk)<2
+    mk(2)=1; % in older LANS version, this was a scalar. if this is saved in preferences, add this to avoid errors
+end;
+
 % smooth images with a gaussian filter just before calculating the ratio
 % images, if the smoothing kernel>1
 % note that the accumulated values were already calculated above

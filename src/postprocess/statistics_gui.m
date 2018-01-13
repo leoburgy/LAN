@@ -704,7 +704,7 @@ if selected_compare(handles)==2
             
             % display raw data to the main window so that the one can copy
             % and paste it nicely organized, if one wishes to do so
-            fprintf(1,'ALL DATA:\ncls\ttmnt\t%s\n',sr);
+            fprintf(1,'*********\nALL DATA (comparison of classes):\ncls\ttmnt\t%s\n',sr);
             for ii=1:length(x)
                 fprintf(1,'%c\t%d\t%.4e\n',cls(ii),g(ii),x(ii));
             end;
@@ -786,10 +786,19 @@ if selected_compare(handles)==3
             % display raw data to the main window so that the one can copy
             % and paste it nicely organized, if one wishes to do so
             %fprintf(1,'cls\ttmnt\t%s\n',sr);
-            fprintf(1,'class = %s\ntmnt\t%s\n',cls(1),sr);
+            fprintf(1,'*********\nALL DATA (comparison of treatments):\ncls\ttmnt\t%s\n',sr);
             for ii=1:length(x)
                 %fprintf(1,'%c\t%d\t%.4e\n',cls(ii),g(ii),x(ii));
-                fprintf(1,'%d\t%.4e\n',g(ii),x(ii));
+                fprintf(1,'%c\t%d\t%.4e\n',cls(1),g(ii),x(ii));
+            end;
+                        
+            % calculate means, std, etc.
+            [mm,ss,gn,nn,meanci,sem]=grpstats(x,g,{'mean','std','gname','numel','meanci','sem'});
+            [mc]=grpstats(cls,g,{'mean'});
+            [mt]=grpstats(tmnt,g,{'mean'});
+            fprintf(1,'STATISTICS:\ngroup\tmean     \tsem      \tstd      \tN:\n');
+            for ii=1:length(mm)
+                fprintf(1,'%s\t%.3e\t%.3e\t%.3e\t%d\n',gn{ii},mm(ii),sem(ii),ss(ii),nn(ii));
             end;
             
             tt = get(handles.popupmenu3,'value'); % test type       

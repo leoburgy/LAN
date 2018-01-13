@@ -11,6 +11,6 @@ if additional_settings.display_error_bars
 
 else
     
-    fprintf(1,'*** WARNING: Error bars not displayed. This can be modified through Preferences -> additional output options.\n');
+    %fprintf(1,'*** WARNING: Error bars not displayed. This can be modified through Preferences -> additional output options.\n');
     
 end;

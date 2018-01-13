@@ -531,11 +531,13 @@ else
 end;
 
 function myprecallback(obj,evd)
+newLim = get(evd.Axes,'XLim');
+fprintf(1,'PreCall: The new X-Limits are [%.2f %.2f]\n',newLim);
 %disp('A zoom is about to occur.');
 
 function mypostcallback(obj,evd)
 newLim = get(evd.Axes,'XLim');
-fprintf(1,'The new X-Limits are [%.2f %.2f]\n',newLim);
+fprintf(1,'PostCall: The new X-Limits are [%.2f %.2f]\n',newLim);
 %msgbox(sprintf('The new X-Limits are [%.2f %.2f].',newLim));
 % this does not work as intended, so I give up on this
 %h = zoom;
@@ -1075,7 +1077,11 @@ ind = find(origc>0);
 M = size(CELLS,1);
 N = size(CELLS,2);
 for ii=1:length(ind)
-    x = floor( ind(ii)/M )+1;
+    if rem(ind(ii),M)==0
+        x = ind(ii)/M;
+    else
+        x = floor( ind(ii)/M )+1;
+    end;
     y = ind(ii) - M*(x-1);
     indx = [-1:1]+x;
     indx = indx(find(indx>0 & indx<=N));
